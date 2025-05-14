@@ -6,41 +6,36 @@
 /*   By: ael-gady <ael-gady@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:47:57 by ael-gady          #+#    #+#             */
-/*   Updated: 2025/05/14 00:36:57 by ael-gady         ###   ########.fr       */
+/*   Updated: 2025/05/14 03:53:49 by ael-gady         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-// int	main(int ac, char ** av)
-// {
-// 	t_philo			philos[MAX_PHILOS];
-// 	pthread_mutex_t	forks[MAX_PHILOS];
-// 	int				nbr_of_philo;
-// 	long			*arr_nbrs;
+static void	cleanup_forks(pthread_mutex_t *forks, int nbr_of_philo)
+{
+	int	i;
 
-// 	if (ac == 5 || ac == 6)
-// 	{
-// 		if (ft_check_arguments(ac, av))
-// 		{
-// 			arr_nbrs = arr_of_nbr(ac, av);
-// 			if (!arr_nbrs)
-// 				return (0);
-// 			nbr_of_philo = arr_nbrs[0];
-// 			if (nbr_of_philo > MAX_PHILOS)
-// 			{
-// 				free(arr_nbrs);
-// 				print_error("Error: too many philosophers\n");
-// 				return (0);
-// 			}
-// 			pass_data_to_philo(philos, arr_nbrs, nbr_of_philo);//todo
-// 			free(arr_nbrs);
-// 		}
-// 	}
-// 	else
-// 		print_error("Error: invalid argument\n");
-// 	return (0);
-// }
+	i = 0;
+	while (i < nbr_of_philo)
+	{
+		pthread_mutex_destroy(&forks[i]);
+		i++;
+	}
+}
+
+void	cleanup_mutex(t_controller *cntrl, pthread_mutex_t *forks)
+{
+	cleanup_forks(forks, cntrl->nbr_of_philo);
+	pthread_mutex_destroy(&cntrl->is_dead_mutex);
+	pthread_mutex_destroy(&cntrl->meal_mutex);
+	pthread_mutex_destroy(&cntrl->print_mutex);
+}
+
+int	ft_execute_launch(t_controller *cntrl)
+{
+	
+}
 
 int	main(int ac, char **av)
 {
@@ -59,10 +54,11 @@ int	main(int ac, char **av)
 	free(arr_nbrs);
 	if (!init_forks(forks, nbr_of_philo))//done
 		return (1);
-	if (setup_philosophers(philos, forks, &cntrl, nbr_of_philo))
-		return (cleanup_forks(forks, nbr_of_philo), 1);//todo
-	if (start_simulation(philos, nbr_of_philo))
-		return (cleanup(&cntrl, forks, nbr_of_philo), 1);//todo
-	cleanup(&cntrl, forks, nbr_of_philo);//todo
+	if (prepare_controller(&cntrl, philos, nbr_of_philo))
+		return (cleanup_forks(forks, nbr_of_philo), 1);
+	setup_philosophers(philos, forks, &cntrl, nbr_of_philo);
+	if (ft_execute_launch(&cntrl))//todo
+		return (cleanup_mutex(&cntrl, forks), 1);
+	cleanup_mutex(&cntrl, forks);
 	return (0);
 }

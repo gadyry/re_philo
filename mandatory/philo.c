@@ -6,7 +6,7 @@
 /*   By: ael-gady <ael-gady@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:47:57 by ael-gady          #+#    #+#             */
-/*   Updated: 2025/05/14 18:26:05 by ael-gady         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:38:44 by ael-gady         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,15 @@ int	ft_execute_launch(t_controller *cntrl, pthread_mutex_t *forks)
 	{
 		print_error("Erorr : failed to create a monitor thread !! \n");
 		return (cleanup_mutex(cntrl, forks), 1);
+	}
+	i = -1;
+	while (++i < cntrl->nbr_of_philo)
+	{
+		if (pthread_create(&cntrl->philos[i].philo, NULL, philo_routine, NULL))//todo
+		{
+			print_error("Erorr : failed to create a monitor thread !! \n");
+			return (cleanup_mutex(cntrl, forks), 1);
+		}
 	}
 }
 

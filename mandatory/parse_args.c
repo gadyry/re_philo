@@ -6,7 +6,7 @@
 /*   By: ael-gady <ael-gady@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:51:55 by ael-gady          #+#    #+#             */
-/*   Updated: 2025/05/13 18:05:04 by ael-gady         ###   ########.fr       */
+/*   Updated: 2025/05/14 19:30:48 by ael-gady         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	ft_parse_av(const char *str, long *out, int index)
 	res = 0;
 	if (str[i] == '+')
 		i++;
+	if (str[i] == '\0')
+		return (0);
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
@@ -73,12 +75,24 @@ long	*arr_of_nbr(int size, char **args)
 	return (arr_nbrs);
 }
 
-int	ft_check_arguments(int ac, char **args)
+int ft_check_arguments(int ac, char **args)
 {
 	long	*nbrs;
 
+	if (ac != 5 && ac != 6)
+	{
+		print_error("Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
+		return (0);
+	}
 	nbrs = arr_of_nbr(ac, args);
 	if (!nbrs)
 		return (0);
-	return (free(nbrs), 1);
+	if (nbrs[0] <= 0 || nbrs[0] > MAX_PHILOS)
+	{
+		print_error("Error: invalid number of philosophers\n");
+		free(nbrs);
+		return (0);
+	}
+	free(nbrs);
+	return (1);
 }

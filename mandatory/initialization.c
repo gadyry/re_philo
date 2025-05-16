@@ -6,7 +6,7 @@
 /*   By: ael-gady <ael-gady@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 19:34:57 by ael-gady          #+#    #+#             */
-/*   Updated: 2025/05/14 03:54:29 by ael-gady         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:40:47 by ael-gady         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ int		prepare_controller(t_controller *cntrl, t_philo *philos, int nbr_of_philo)
 		return (print_error("Error: Failed to initialize print mutex\n"), 1);
 	if (pthread_mutex_init(&cntrl->is_dead_mutex, NULL))
 		return (print_error("Error: Failed to initialize dead mutex\n"), 1);
+	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ael-gady <ael-gady@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:59:25 by ael-gady          #+#    #+#             */
-/*   Updated: 2025/05/17 19:27:39 by ael-gady         ###   ########.fr       */
+/*   Updated: 2025/05/18 08:08:11 by ael-gady         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void *death_detection_monitor(void *arg)
 	t_controller *cntrl = (t_controller *)arg;
 	int i;
 
-	while (1)
+	while (69)
 	{
 		i = -1;
 		while (++i < cntrl->nbr_of_philo)

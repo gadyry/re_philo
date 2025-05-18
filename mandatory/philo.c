@@ -6,7 +6,7 @@
 /*   By: ael-gady <ael-gady@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:47:57 by ael-gady          #+#    #+#             */
-/*   Updated: 2025/05/16 19:00:23 by ael-gady         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:27:02 by ael-gady         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_execute_launch(t_controller *cntrl, pthread_mutex_t *forks)
 	{
 		if (pthread_create(&cntrl->philos[i].philo, NULL, &philo_routine, &cntrl->philos[i]))//todo
 		{
-			print_error("Erorr : failed to create a monitor thread !! \n");
+			print_error("Erorr : failed to create a philosopher thread !! \n");
 			return (cleanup_mutex(cntrl, forks), 1);
 		}
 	}
@@ -59,7 +59,7 @@ int	ft_execute_launch(t_controller *cntrl, pthread_mutex_t *forks)
 	i = -1;
 	while (++i < cntrl->nbr_of_philo)
 	{
-		if (pthread_join(&cntrl->philos[i].philo, NULL))
+		if (pthread_join(cntrl->philos[i].philo, NULL))
 		{
 			print_error("Error : failed to join philo\n");
 			return (cleanup_mutex(cntrl, forks), 1);

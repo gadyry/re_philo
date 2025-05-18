@@ -6,7 +6,7 @@
 /*   By: ael-gady <ael-gady@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:49:01 by ael-gady          #+#    #+#             */
-/*   Updated: 2025/05/16 18:58:53 by ael-gady         ###   ########.fr       */
+/*   Updated: 2025/05/18 08:06:29 by ael-gady         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stdio.h>//printf...
 # include <stdlib.h>//malloc...
-# include <pthread.h>//for threads
+# include <pthread.h>//for create threads
 # include <unistd.h>//for write
 # include <limits.h>//for max/min
 # include <sys/time.h>//for gettimeofday()
@@ -54,6 +54,8 @@ int		prepare_controller(t_controller *cntrl, t_philo *philo, int nbr_of_philo);
 void	cleanup_mutex(t_controller *cntrl, pthread_mutex_t *forks);
 void	setup_philosophers(t_philo *philos, pthread_mutex_t *forks, t_controller *cntrl, int nbr_of_philo);
 
+long	get_current_time_ms();
 void	*death_detection_monitor(void *argv);
+void	*philo_routine(void *argv);
 
 #endif
